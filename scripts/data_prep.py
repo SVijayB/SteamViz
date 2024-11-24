@@ -3,13 +3,11 @@ import json
 import time
 import csv
 from collections import defaultdict
-
-json_file_path = r"data/cs2/730.json"
-output_file = r"temp/steam_data.csv"
+import os
 
 
 def extract_monthly_data(json_data):
-    price_data = defaultdict(lambda: {"final_price": 0})
+    price_data = defaultdict(lambda: {"final_price": None})
     player_data = defaultdict(lambda: {"avg_players": 0, "max_players": 0})
     review_data = defaultdict(
         lambda: {
@@ -19,14 +17,20 @@ def extract_monthly_data(json_data):
             "total_negative": 0,
         }
     )
-
+    last_known_price = None
     for entry in json_data:
         if entry["series"][0]["name"] == "Final price":
             for price_entry in entry["series"][0]["data"]:
                 month_year = time.strftime(
                     "%b-%y", time.localtime(price_entry["x"] / 1000)
                 )
-                price_data[month_year]["final_price"] = round(price_entry["y"], 2)
+                current_price = round(price_entry["y"], 2)
+                if current_price is None:
+                    price_data[month_year]["final_price"] = last_known_price
+                else:
+                    price_data[month_year]["final_price"] = current_price
+                    if current_price > 0:
+                        last_known_price = current_price
 
         elif entry["series"][0]["name"] == "Players":
             for player_entry in entry["series"][2]["data"]:
@@ -53,6 +57,7 @@ def extract_monthly_data(json_data):
                         review_data[month_year].get("count", 0) + 1
                     )
 
+    # Calculate review averages
     for month, data in review_data.items():
         if data["count"] > 0:
             data["avg_positive"] = round(data["total_positive"] / data["count"], 2)
@@ -61,7 +66,61 @@ def extract_monthly_data(json_data):
     return price_data, player_data, review_data
 
 
-def write_to_csv(price_data, player_data, review_data, output_file, appid):
+def add_to_csv(price_data, player_data, review_data, output_file, appid):
+    headers = [
+        "appid",
+        "Month-Year",
+        "Avg players (month)",
+        "Max players (month)",
+        "Price",
+        "Positive Reviews",
+        "Negative reviews",
+        "Avg Positive reviews",
+        "Avg Negative reviews",
+    ]
+
+    with open(output_file, "a", newline="") as csvfile:
+        writer = csv.DictWriter(csvfile, fieldnames=headers)
+
+        all_months = sorted(
+            set(price_data.keys()) | set(player_data.keys()) | set(review_data.keys()),
+            key=lambda x: time.strptime(x, "%b-%y"),
+        )
+
+        last_known_price = None
+        for month in all_months:
+            tableau_date = (
+                datetime.datetime.strptime(month, "%b-%y")
+                .replace(day=1)
+                .strftime("%Y-%m-%d")
+            )
+
+            current_price = price_data[month]["final_price"]
+            if current_price is None:
+                price_to_use = last_known_price
+            else:
+                price_to_use = current_price
+                if current_price > 0:
+                    last_known_price = current_price
+
+            row = {
+                "appid": appid,
+                "Month-Year": tableau_date,
+                "Avg players (month)": player_data[month]["avg_players"],
+                "Max players (month)": player_data[month]["max_players"],
+                "Price": price_to_use,
+                "Positive Reviews": review_data[month]["total_positive"],
+                "Negative reviews": review_data[month]["total_negative"],
+                "Avg Positive reviews": review_data[month]["avg_positive"],
+                "Avg Negative reviews": review_data[month]["avg_negative"],
+            }
+            writer.writerow(row)
+
+
+def main():
+    input_dir = r"data/apps"
+    output_file = r"temp/steam_data.csv"
+
     headers = [
         "appid",
         "Month-Year",
@@ -78,31 +137,23 @@ def write_to_csv(price_data, player_data, review_data, output_file, appid):
         writer = csv.DictWriter(csvfile, fieldnames=headers)
         writer.writeheader()
 
-        all_months = (
-            set(price_data.keys()) | set(player_data.keys()) | set(review_data.keys())
-        )
+    for filename in os.listdir(input_dir):
+        if filename.endswith(".json"):
+            json_file_path = os.path.join(input_dir, filename)
+            appid = filename.split(".")[0]
 
-        for month in all_months:
-            timestamp = datetime.datetime.strptime(month, "%b-%y").strftime("%Y-%m-%d")
-            row = {
-                "appid": appid,
-                "month-year": timestamp,
-                "Avg players (month)": player_data[month]["avg_players"],
-                "Max players (month)": player_data[month]["max_players"],
-                "Price": price_data[month]["final_price"],
-                "Positive Reviews": review_data[month]["total_positive"],
-                "Negative reviews": review_data[month]["total_negative"],
-                "avg pos reviews": review_data[month]["avg_positive"],
-                "avg negative reviews": review_data[month]["avg_negative"],
-            }
-            writer.writerow(row)
+            try:
+                with open(json_file_path, "r") as file:
+                    json_data = json.load(file)
+
+                price_data, player_data, review_data = extract_monthly_data(json_data)
+                add_to_csv(price_data, player_data, review_data, output_file, appid)
+                print(f"{filename} - Completed")
+            except Exception as e:
+                print(f"Error processing {filename}: {str(e)}")
+
+    print(f"All data has been added to {output_file}!")
 
 
 if __name__ == "__main__":
-    with open(json_file_path, "r") as file:
-        json_data = json.load(file)
-
-    appid = json_file_path.split("/")[-1].split(".")[0]
-    price_data, player_data, review_data = extract_monthly_data(json_data)
-    write_to_csv(price_data, player_data, review_data, output_file, appid)
-    print(f"Data has been written to {output_file}")
+    main()
