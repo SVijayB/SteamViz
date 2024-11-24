@@ -6,7 +6,26 @@ from collections import defaultdict
 import os
 
 
-def extract_monthly_data(json_data):
+def parse_release_date(date_str):
+    """Convert various date formats to datetime object"""
+    try:
+        # Try different date formats
+        for fmt in ["%Y-%m-%d", "%b %d, %Y", "%d %b, %Y"]:
+            try:
+                date = datetime.datetime.strptime(date_str, fmt)
+                # If date is before 2015, return May 1st, 2015
+                if date.year < 2015:
+                    return datetime.datetime(2015, 5, 1)
+                return date
+            except ValueError:
+                continue
+        # If no format matches, return default date
+        return datetime.datetime(2015, 5, 1)
+    except:
+        return datetime.datetime(2015, 5, 1)
+
+
+def extract_monthly_data(json_data, release_date):
     price_data = defaultdict(lambda: {"final_price": None})
     player_data = defaultdict(lambda: {"avg_players": 0, "max_players": 0})
     review_data = defaultdict(
@@ -38,13 +57,25 @@ def extract_monthly_data(json_data):
                     month_year = time.strftime(
                         "%b-%y", time.localtime(player_entry[0] / 1000)
                     )
-                    player_data[month_year]["avg_players"] = round(player_entry[1], 2)
+                    player_data[month_year]["total_players"] = (
+                        player_data[month_year].get("total_players", 0)
+                        + player_entry[1]
+                    )
+                    player_data[month_year]["count"] = (
+                        player_data[month_year].get("count", 0) + 1
+                    )
                     player_data[month_year]["max_players"] = max(
                         player_data[month_year]["max_players"], player_entry[1]
                     )
 
+            for month, data in player_data.items():
+                if data["count"] > 0:
+                    data["avg_players"] = round(
+                        data["total_players"] / data["count"], 2
+                    )
+
         elif entry["series"][0]["name"] == "Positive reviews":
-            start_date = datetime.datetime.strptime("2015-05-13", "%Y-%m-%d")
+            start_date = parse_release_date(release_date)
             for i, (pos, neg) in enumerate(
                 zip(entry["series"][0]["data"], entry["series"][1]["data"])
             ):
@@ -102,6 +133,8 @@ def add_to_csv(price_data, player_data, review_data, output_file, appid):
                 price_to_use = current_price
                 if current_price > 0:
                     last_known_price = current_price
+            if price_to_use is None:
+                continue
 
             row = {
                 "appid": appid,
@@ -120,6 +153,13 @@ def add_to_csv(price_data, player_data, review_data, output_file, appid):
 def main():
     input_dir = r"data/apps"
     output_file = r"temp/steam_data.csv"
+
+    # Read release dates from CSV
+    release_dates = {}
+    with open("data/steam_games.csv", mode="r", encoding="utf-8") as file:
+        reader = csv.DictReader(file)
+        for row in reader:
+            release_dates[row["appid"]] = row["release_date"]
 
     headers = [
         "appid",
@@ -145,8 +185,11 @@ def main():
             try:
                 with open(json_file_path, "r") as file:
                     json_data = json.load(file)
+                release_date = release_dates.get(appid, "2015-05-13")
 
-                price_data, player_data, review_data = extract_monthly_data(json_data)
+                price_data, player_data, review_data = extract_monthly_data(
+                    json_data, release_date
+                )
                 add_to_csv(price_data, player_data, review_data, output_file, appid)
                 print(f"{filename} - Completed")
             except Exception as e:
