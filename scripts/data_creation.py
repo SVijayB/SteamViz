@@ -1,6 +1,7 @@
 import time
 import requests
 import sqlite3
+import csv
 
 
 def fetch_steam_data(appid):
@@ -58,51 +59,96 @@ def fetch_steam_data(appid):
         return None
 
 
-def insert_data_to_db(data):
-    conn = sqlite3.connect("data/steam_apps.db")
-    cursor = conn.cursor()
+# def insert_data_to_db(data):
+#     conn = sqlite3.connect("data/steam_apps.db")
+#     cursor = conn.cursor()
 
-    cursor.execute(
-        """
-    INSERT OR REPLACE INTO apps (appid, name, type, required_age, is_free, short_description, capsule_image,
-    developers, publishers, release_date, platforms, metacritic_score, categories, genres, price, movies)
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-    """,
-        (
-            data["appid"],
-            data["name"],
-            data["type"],
-            data["required_age"],
-            data["is_free"],
-            data["short_description"],
-            data["capsule_image"],
-            data["developers"],
-            data["publishers"],
-            data["release_date"],
-            data["platforms"],
-            data["metacritic_score"],
-            data["categories"],
-            data["genres"],
-            data["price"],
-            data["movies"],
-        ),
-    )
-    conn.commit()
-    conn.close()
+#     cursor.execute(
+#         """
+#     INSERT OR REPLACE INTO apps (appid, name, type, required_age, is_free, short_description, capsule_image,
+#     developers, publishers, release_date, platforms, metacritic_score, categories, genres, price, movies)
+#     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+#     """,
+#         (
+#             data["appid"],
+#             data["name"],
+#             data["type"],
+#             data["required_age"],
+#             data["is_free"],
+#             data["short_description"],
+#             data["capsule_image"],
+#             data["developers"],
+#             data["publishers"],
+#             data["release_date"],
+#             data["platforms"],
+#             data["metacritic_score"],
+#             data["categories"],
+#             data["genres"],
+#             data["price"],
+#             data["movies"],
+#         ),
+#     )
+#     conn.commit()
+#     conn.close()
+
+
+def save_data_to_csv(data, file_name="data/steam_games.csv"):
+    # Define the column headers
+    headers = [
+        "appid",
+        "name",
+        "type",
+        "required_age",
+        "is_free",
+        "short_description",
+        "capsule_image",
+        "developers",
+        "publishers",
+        "release_date",
+        "platforms",
+        "metacritic_score",
+        "categories",
+        "genres",
+        "price",
+        "movies",
+    ]
+
+    with open(file_name, mode="a", newline="", encoding="utf-8") as file:
+        writer = csv.DictWriter(file, fieldnames=headers)
+        if file.tell() == 0:
+            writer.writeheader()
+        writer.writerow(
+            {
+                "appid": data["appid"],
+                "name": data["name"],
+                "type": data["type"],
+                "required_age": data["required_age"],
+                "is_free": data["is_free"],
+                "short_description": data["short_description"],
+                "capsule_image": data["capsule_image"],
+                "developers": data["developers"],
+                "publishers": data["publishers"],
+                "release_date": data["release_date"],
+                "platforms": data["platforms"],
+                "metacritic_score": data["metacritic_score"],
+                "categories": data["categories"],
+                "genres": data["genres"],
+                "price": data["price"],
+                "movies": data["movies"],
+            }
+        )
 
 
 def get_app_ids():
     response = requests.get("https://steamspy.com/api.php?request=top100forever")
     data = response.json()
     app_ids = list(data.keys())
+    print({appid: data[appid]["name"] for appid in app_ids})
 
-    conn = sqlite3.connect("data/steam_apps.db")
-    cursor = conn.cursor()
-    cursor.execute("SELECT appid FROM apps")
-    existing_appids = cursor.fetchall()
-    conn.close()
+    with open("data/steam_games.csv", mode="r", encoding="utf-8") as file:
+        reader = csv.DictReader(file)
+        existing_appids = [row["appid"] for row in reader]
 
-    existing_appids = [str(appid[0]) for appid in existing_appids]
     app_ids = list(set(app_ids) - set(existing_appids))
     if len(app_ids) == 0:
         print("No new games to add.")
@@ -115,7 +161,7 @@ def main():
     for appid in app_ids:
         app_data = fetch_steam_data(appid)
         if app_data:
-            insert_data_to_db(app_data)
+            save_data_to_csv(app_data)
             print(app_data["name"], "ADDED")
             time.sleep(2)
 
