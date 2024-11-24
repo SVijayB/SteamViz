@@ -1,93 +1,108 @@
 import datetime
 import json
 import time
+import csv
 from collections import defaultdict
-from pprint import pprint
 
 json_file_path = r"data/cs2/730.json"
 output_file = r"temp/steam_data.csv"
 
 
-def extract_monthly_price_data(data):
-    price_monthly_data = defaultdict(lambda: {"total_price": 0, "count": 0})
-    for entry in data["data"]:
-        month_year = time.strftime("%b-%y", time.localtime(entry["x"] / 1000))
-        price_monthly_data[month_year]["total_price"] += entry["y"]
-        price_monthly_data[month_year]["count"] += 1
-
-    result = {}
-    for month, data in price_monthly_data.items():
-        result[month] = {"final_price": round(data["total_price"] / data["count"], 2)}
-    return result
-
-
-def extract_monthly_player_data(data):
-    players_monthly_data = defaultdict(
-        lambda: {"avg_players": 0, "count": 1, "max_players": 0}
+def extract_monthly_data(json_data):
+    price_data = defaultdict(lambda: {"final_price": 0})
+    player_data = defaultdict(lambda: {"avg_players": 0, "max_players": 0})
+    review_data = defaultdict(
+        lambda: {
+            "avg_positive": 0,
+            "avg_negative": 0,
+            "total_positive": 0,
+            "total_negative": 0,
+        }
     )
-    result = {}
-    for entry in data[0]["data"]:
-        month_year = time.strftime("%b-%y", time.localtime(entry[0] / 1000))
-        entry[1] = 0 if entry[1] == None else entry[1]
-        players_monthly_data[month_year]["max_players"] = (
-            entry[1]
-            if entry[1] > players_monthly_data[month_year]["max_players"]
-            else players_monthly_data[month_year]["max_players"]
+
+    for entry in json_data:
+        if entry["series"][0]["name"] == "Final price":
+            for price_entry in entry["series"][0]["data"]:
+                month_year = time.strftime(
+                    "%b-%y", time.localtime(price_entry["x"] / 1000)
+                )
+                price_data[month_year]["final_price"] = round(price_entry["y"], 2)
+
+        elif entry["series"][0]["name"] == "Players":
+            for player_entry in entry["series"][2]["data"]:
+                if player_entry[1] is not None:
+                    month_year = time.strftime(
+                        "%b-%y", time.localtime(player_entry[0] / 1000)
+                    )
+                    player_data[month_year]["avg_players"] = round(player_entry[1], 2)
+                    player_data[month_year]["max_players"] = max(
+                        player_data[month_year]["max_players"], player_entry[1]
+                    )
+
+        elif entry["series"][0]["name"] == "Positive reviews":
+            start_date = datetime.datetime.strptime("2015-05-13", "%Y-%m-%d")
+            for i, (pos, neg) in enumerate(
+                zip(entry["series"][0]["data"], entry["series"][1]["data"])
+            ):
+                if pos is not None and neg is not None:
+                    current_date = start_date + datetime.timedelta(days=i)
+                    month_year = current_date.strftime("%b-%y")
+                    review_data[month_year]["total_positive"] += pos
+                    review_data[month_year]["total_negative"] += abs(neg)
+                    review_data[month_year]["count"] = (
+                        review_data[month_year].get("count", 0) + 1
+                    )
+
+    for month, data in review_data.items():
+        if data["count"] > 0:
+            data["avg_positive"] = round(data["total_positive"] / data["count"], 2)
+            data["avg_negative"] = round(data["total_negative"] / data["count"], 2)
+
+    return price_data, player_data, review_data
+
+
+def write_to_csv(price_data, player_data, review_data, output_file, appid):
+    headers = [
+        "appid",
+        "Month-Year",
+        "Avg players (month)",
+        "Max players (month)",
+        "Price",
+        "Positive Reviews",
+        "Negative reviews",
+        "Avg Positive reviews",
+        "Avg Negative reviews",
+    ]
+
+    with open(output_file, "w", newline="") as csvfile:
+        writer = csv.DictWriter(csvfile, fieldnames=headers)
+        writer.writeheader()
+
+        all_months = (
+            set(price_data.keys()) | set(player_data.keys()) | set(review_data.keys())
         )
 
-    for entry in data[1]["data"]:
-        month_year = time.strftime("%b-%y", time.localtime(entry[0] / 1000))
-        players_monthly_data[month_year]["avg_players"] += entry[1]
-        players_monthly_data[month_year]["count"] += 1
-
-    for month, data in players_monthly_data.items():
-        result[month] = {
-            "avg_players": data["avg_players"] / data["count"],
-            "max_players": data["max_players"],
-        }
-    return result
-
-
-def extract_monthly_reviews_data(data, start_date):
-    start_date = datetime.datetime.strptime(start_date, "%Y-%m-%d")
-    monthly_data = defaultdict(lambda: {"positive": 0, "negative": 0, "count": 0})
-    positive_reviews = data[0]["data"]
-    negative_reviews = data[1]["data"]
-
-    for i in range(len(positive_reviews)):
-        current_date = start_date + datetime.timedelta(days=i)
-        month_key = current_date.strftime("%b-%y")
-
-        if positive_reviews[i] is not None:
-            monthly_data[month_key]["positive"] += positive_reviews[i]
-            monthly_data[month_key]["count"] += 1
-
-        if negative_reviews[i] is not None:
-            monthly_data[month_key]["negative"] += abs(negative_reviews[i])
-
-    result = {}
-    for month, data in monthly_data.items():
-        if data["count"] > 0:
-            result[month] = {
-                "avg_positive": round(data["positive"] / data["count"], 2),
-                "avg_negative": round(data["negative"] / data["count"], 2),
-                "total_positive_reviews": data["positive"],
-                "total_negative_reviews": data["negative"],
+        for month in all_months:
+            timestamp = datetime.datetime.strptime(month, "%b-%y").strftime("%Y-%m-%d")
+            row = {
+                "appid": appid,
+                "month-year": timestamp,
+                "Avg players (month)": player_data[month]["avg_players"],
+                "Max players (month)": player_data[month]["max_players"],
+                "Price": price_data[month]["final_price"],
+                "Positive Reviews": review_data[month]["total_positive"],
+                "Negative reviews": review_data[month]["total_negative"],
+                "avg pos reviews": review_data[month]["avg_positive"],
+                "avg negative reviews": review_data[month]["avg_negative"],
             }
-
-    return result
+            writer.writerow(row)
 
 
 if __name__ == "__main__":
     with open(json_file_path, "r") as file:
         json_data = json.load(file)
 
-    for entry in json_data:
-        type = entry["series"][0]["name"]
-        if type == "Final price":
-            print(extract_monthly_price_data(entry["series"][0]))
-        if type == "Players":
-            print(extract_monthly_player_data(entry["series"]))
-        if type == "Positive reviews":
-            print(extract_monthly_reviews_data(entry["series"], "2015-05-13"))
-    print("Done")
+    appid = json_file_path.split("/")[-1].split(".")[0]
+    price_data, player_data, review_data = extract_monthly_data(json_data)
+    write_to_csv(price_data, player_data, review_data, output_file, appid)
+    print(f"Data has been written to {output_file}")
