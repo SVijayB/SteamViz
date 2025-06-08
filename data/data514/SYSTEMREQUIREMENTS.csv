@@ -1,0 +1,101 @@
+appid,simplified_os,os,cpu,gpu,ram_gb,storage_gb
+1097150,Windows 10,Windows 10 64bit,i5 2500K Series,"Nvidia GTX 660 Series, AMD HD 7950 Series",8.0,2.0
+381210,Windows 10,Windows 10 64-bit Operating System,"i3 4170K Series, FX 8300K Series","Nvidia GeForce 760 Series, AMD HD 8800 Series",8.0,50.0
+301520,Windows VISTA,Vista/7/8/8.1/10,Dual Core Series,DirectX 9.0c,4.0,2.0
+413150,Windows VISTA,Windows Vista or greater,Other/Uncategorized,Generic Graphics Card / Video Memory,2.0,0.5
+261550,Windows 10,Windows 10 (64-bit only),"i5 9600K Series, Ryzen 5 3600K Series","Nvidia GTX 1060 Series, AMD RX 580 Series",8.0,60.0
+204360,Windows XP,Microsoft Windows XP / Vista / 7 /,Core 2 Series,Generic Graphics Card / Video Memory,1.0,0.255
+107410,Windows 7,Windows 7 SP1 (64bit),Dual Core Series,"Nvidia GeForce 9800 Series, AMD HD 5670 Series",4.0,45.0
+582010,Windows 10,Windows 10 (64-bit required),"i3 8350K Series, Ryzen 5 1500K Series","Nvidia GTX 1060 Series, Nvidia GTX 1650 Series, AMD RX 480 Series, AMD RX 570 Series",8.0,52.0
+272060,Windows XP,Windows XP,Other/Uncategorized,Other/Uncategorized,1.0,0.5
+1240440,Windows 10,Windows 10 19H2 x64,"i7 9700K Series, Ryzen 7 3700K Series","Nvidia RTX 2070 Series, AMD RX 5700 Series",16.0,50.0
+1938090,Windows 10,Windows 10 64 Bit (latest update) or Windows 11 64 Bit (latest update),"i7 6700K Series, Ryzen 5 1600K Series","Nvidia GTX 1080 Series, Nvidia RTX 3060 Series, AMD RX 6600 Series",12.0,128.0
+394360,Windows 10,Windows 10 Home 64 Bit,"i5 2500K Series, Ryzen 3 2200K Series","Nvidia GTX 570 Series, AMD HD 7970 Series, Intel Iris Series",6.0,
+227300,Windows 10,Windows 10 64-bit,"i5 9600K Series, Ryzen 5 3600K Series","Nvidia GTX 1660 Series, AMD RX 590 Series",12.0,25.0
+2358720,Windows 10,Windows 10 64-bit,"i7 9700K Series, Ryzen 5 5500K Series","Nvidia RTX 2060 Series, AMD RX 5700 Series, Intel Arc a750 Series",16.0,130.0
+49520,Windows XP,Windows XP SP3/Vista/Win 7,Quad Core Series,"Nvidia GTX 560 Series, AMD HD 5850 Series",2.0,20.0
+377160,Windows 7,Windows 7/8/10 (64-bit OS required),"i7 4790K Series, FX 9590K Series",Nvidia GTX 780 Series,8.0,30.0
+431960,Windows 10,"Windows 10, Windows 11",i7 4790K Series,"Nvidia GTX 660 Series, AMD HD 7870 Series",2.048,1.024
+359550,Windows 10,"Windows 10, Windows 11 (64-bit versions)","i5 4590K Series, Ryzen 3 1200K Series","Nvidia GTX 960 Series, AMD RX 560 Series, Intel Arc a380 Series",8.0,86.0
+291550,Windows Unknown,,Other/Uncategorized,Other/Uncategorized,4.0,2.0
+945360,Windows 10,Windows 10 x64bit,i3 4330K Series,Nvidia GTX 650 Series,4.0,2.0
+570,Windows 7,Windows 7 or newer,Dual Core Series,"Nvidia GeForce 8600 Series, AMD HD 2600 Series",4.0,60.0
+1172470,Windows 10,64-bit Windows 10,Ryzen 5 1600K Series,Nvidia GTX 970 Series,8.0,75.0
+1222670,Windows 10,64 Bit Windows 10,"i5 2500K Series, Ryzen 5 1500K Series","Nvidia GTX 650 Series, AMD HD 7750 Series",8.0,51.0
+438100,Windows 10,Windows 10/11,"i5 4590K Series, FX 8350K Series",Nvidia GTX 970 Series,4.0,1.0
+1174180,Windows 10,Windows 10 - 64-bit,"i7 4770K Series, Ryzen 5 1500K Series","Nvidia GTX 1060 Series, AMD RX 480 Series",12.0,150.0
+60,Windows XP,Windows XP,Other/Uncategorized,Generic Graphics Card / Video Memory,0.128,2.0
+578080,Windows 10,64-bit Windows 10,"i5 6600K Series, Ryzen 5 1600K Series","Nvidia GTX 1060 Series, AMD RX 580 Series",16.0,50.0
+755790,Windows 7,"Windows 7, Windows 8.1, Windows 10 (64-bit version)",i5 2500K Series,Nvidia GTX 1050 Series,6.0,10.0
+8930,Windows VISTA,Windows Vista SP2/ Windows 7,Quad Core Series,"Nvidia GeForce 9800 Series, AMD ATI 4800 Series",4.0,8.0
+291480,Windows 10,Windows 10,"i5 3470K Series, Athlon 240GE Series",Nvidia GeForce 1050 Series,6.0,35.0
+632360,Windows 7,"Windows 7 or newer, 64-bit","i5 4670K Series, Ryzen 5 1500K Series","Nvidia GTX 680 Series, AMD HD 7970 Series",4.0,4.0
+218620,Windows 10,Windows 10,Quad Core Series,Other/Uncategorized,8.0,83.0
+550,Windows XP,Windows 7 32/64-bit / Vista 32/64 / XP,Core 2 Series,Generic Graphics Card / Video Memory,2.0,13.0
+739630,Windows 10,Windows 10 64Bit,"i5 10600K Series, Ryzen 5 3600K Series","Nvidia RTX 2060 Series, AMD RX 5700 Series",8.0,21.0
+1063730,Windows 10,Windows 10/11 64-bit,"i7 10700K Series, Ryzen 5 3600K Series","Nvidia GTX 2060 Series, AMD RX 6600 Series",16.0,100.0
+271590,Windows 10,Windows 10 64 Bit,"i5 3470K Series, FX 8350K Series","Nvidia GTX 660 Series, AMD HD 7870 Series",8.0,120.0
+96000,Windows XP,Microsoft Windows XP SP1 or newer,Other/Uncategorized,DirectX 9.0,0.512,0.18
+620,Windows XP,Windows 7 / Vista / XP,Dual Core Series,Generic Graphics Card / Video Memory,2.0,8.0
+444200,Windows 7,"Windows 7, 8.0, 8.1, 10, 11",Other/Uncategorized,DirectX 11,2.0,8.0
+72850,Windows XP,Windows 7/Vista/XP PC (32 or 64 bit),Quad Core Series,DirectX 9.0c,4.0,6.0
+1203220,Windows 10,Windows 10 64-bit,i7 7700K Series,"Nvidia GTX 1060 Series, AMD RX 480 Series, Intel Arc a750 Series",16.0,50.0
+218230,Windows 7,64-bit Windows 7 or later,"i5 6600K Series, Ryzen 5 1600K Series",Nvidia GeForce 960 Series,8.0,20.0
+322330,Windows VISTA,Windows Vista/Windows 7/Windows 8,Other/Uncategorized,AMD HD 5450 Series,1.0,3.0
+105600,Windows 7,"Windows 7, 8/8.1, 10",Dual Core Series,Generic Graphics Card / Video Memory,4.0,0.2
+255710,Windows 10,Windows 10 Home 64 bit,"i7 2700K Series, Ryzen 7 2700K Series","Nvidia GTX 580 Series, AMD RX 560 Series",16.0,4.0
+238960,Windows 10,Windows 10,Quad Core Series,"Nvidia GTX 1050 Series, AMD RX 560 Series",16.0,40.0
+4000,Windows 10,Windows 10/11,Other/Uncategorized,Other/Uncategorized,8.0,25.0
+289070,Windows 8,Windows 7x64 / Windows 8.1x64 / Windows 10x64,"i5 2500K Series, FX 8350K Series",Nvidia GeForce 770 Series,8.0,23.0
+1238810,Windows 10,64-bit Windows 10 or later,"i7 4790K Series, Ryzen 3 1300K Series","Nvidia GTX 1060 Series, AMD RX 580 Series",12.0,50.0
+444090,Windows 8,Windows 8/10 64-bit (latest Service Pack),"i5 7500K Series, Phenom II X4 Series","Nvidia GTX 660 Series, AMD HD 7950 Series",6.0,30.0
+367520,Windows 10,Windows 10 (64bit),i5 2400K Series,Nvidia GTX 560 Series,8.0,9.0
+108600,Windows 10,"Windows 10, 64 Bit",Quad Core Series,Generic Graphics Card / Video Memory,8.0,5.0
+386360,Windows 8,Windows 8/10 64-bit (latest Service Pack),"i5 2400K Series, Phenom II X3 Series","Nvidia GTX 660 Series, AMD HD 7950 Series",6.0,30.0
+251570,Windows 10,Windows 10 or higher (64-bit),Quad Core Series,Other/Uncategorized,12.0,15.0
+346110,Windows 7,Windows 7/8.1/10 (64-bit versions),"i5 2400K Series, FX 8320K Series","Nvidia GTX 670 Series, AMD HD 7870 Series",8.0,60.0
+240,Windows XP,Windows 7 (32/64-bit)/Vista/XP,Pentium Series,Generic Graphics Card / Video Memory,1.0,2.0
+892970,Windows 7,Windows 7 or later,"i5 6600K Series, Ryzen 5 1600K Series","Nvidia GTX 1060 Series, AMD RX 580 Series",16.0,1.0
+990080,Windows 10,64-bit Windows 10,"i7 8700K Series, Ryzen 5 3600K Series","Nvidia GeForce 1080 Series, AMD RX 5700 Series, Intel Arc a770 Series",16.0,85.0
+10,Windows XP,Windows XP,Other/Uncategorized,Generic Graphics Card / Video Memory,0.128,2.0
+433850,Windows 7,"Windows 7, 8, 8.1, 10 (64 bit only)","i5 6600K Series, Ryzen 5 1600K Series",Nvidia GTX 960 Series,8.0,20.0
+553850,Windows 10,Windows 10,"i7 9700K Series, Ryzen 7 3700K Series","Nvidia RTX 2060 Series, AMD RX 6600 Series",16.0,100.0
+1623730,Windows 10,Windows 10 or later (64-Bit),i9 9900K Series,Nvidia RTX 2070 Series,32.0,40.0
+552990,Windows 7,Windows 7 x64 / 8.1 / 10 / 11,"i5 10400K Series, Ryzen 5 3600K Series","Nvidia GTX 770 Series, AMD RX 570 Series",8.0,63.0
+899770,Windows 10,Windows 10,"i5 6500K Series, Ryzen 3 1200K Series","Nvidia RTX 3060 Series, AMD RX 6600 Series",16.0,22.0
+239140,Windows 7,Windows 7 64-bit / Windows 8 64-bit / Windows 8.1 64-bit,"i5 4670K Series, FX 8350K Series",Nvidia GTX 780 Series,8.0,40.0
+320,Windows XP,Windows XP,Other/Uncategorized,DirectX 9,0.512,2.0
+730,Windows 10,Windows 10,i5 7500K Series,DirectX 11,8.0,85.0
+648800,Windows 7,Windows 7 or later,i5 6600K Series,Nvidia GTX 1050 Series,8.0,10.0
+292030,Windows 10,64-bit Windows 10/11,"i5 7400K Series, Ryzen 5 1600K Series","Nvidia GTX 1070 Series, AMD RX 480 Series",8.0,50.0
+70,Windows XP,Windows XP,Other/Uncategorized,Generic Graphics Card / Video Memory,0.128,2.0
+1966720,Windows 10,Windows 10,i5 7400K Series,Nvidia GTX 1050 Series,1.0,2.0
+440,Windows 7,Windows 7 (32/64-bit),Pentium Series,DirectX Version 8,1.0,15.0
+242760,Windows 7,Windows 7,Quad Core Series,Nvidia GTX 560 Series,4.0,5.0
+1086940,Windows 10,Windows 10 64-bit,"i7 8700K Series, Ryzen 5 3600K Series","Nvidia GeForce 2060 Series, AMD RX 5700 Series",16.0,150.0
+594650,Windows 11,Windows 11 64 bit,"i7 8700K Series, Ryzen 5 2700K Series",Nvidia RTX 2060 Series,12.0,75.0
+250900,Windows XP,Windows 8 / 7 / Vista / XP,Quad Core Series,Nvidia GeForce 2 Series,8.0,0.449
+1517290,Windows 10,64-bit Windows 10,"i7 4790K Series, Ryzen 7 2700K Series","Nvidia RTX 3060 Series, AMD RX 6600 Series",16.0,100.0
+400,Windows XP,Windows 7 (32/64-bit)/Vista/XP,Pentium Series,Generic Graphics Card / Video Memory,1.0,2.0
+1811260,Windows 10,Windows 10 - 64-Bit (Latest Update),"i7 6700K Series, Ryzen 7 2700K Series","Nvidia GTX 1660 Series, AMD RX 5600 Series",12.0,100.0
+1085660,Windows 10,Windows 10 64-bit (latest Service Pack),i5 2400K Series,Nvidia GTX 1060 Series,8.0,105.0
+304930,Windows 10,Windows 10 64-bit,Other/Uncategorized,Other/Uncategorized,16.0,6.0
+526870,Windows 11,Windows 11 or later (64-Bit),"i5 12400K Series, Ryzen 5 5600K Series","Nvidia RTX 2070 Series, AMD RX 5700 Series",16.0,20.0
+1089350,Windows 7,"Windows 7 64-bit, Windows 8.1 64-bit or Windows 10 64-bit","i5 4430K Series, FX 8370K Series",Nvidia GTX 770 Series,8.0,80.0
+252490,Windows 11,Windows 11 64bit,"i7 4790K Series, Ryzen 5 2600K Series","Nvidia RTX 3060 Series, AMD RX 570 Series",16.0,35.0
+236390,Windows 10,Windows 10/11 (64bit),"i5 4430K Series, Ryzen 5 3600K Series",DirectX 11,16.0,95.0
+252950,Windows 7,Windows 7 (64 bit) or Newer (64 bit) Windows OS,Quad Core Series,"Nvidia GTX 1060 Series, AMD RX 470 Series",8.0,20.0
+230410,Windows 7,Windows 7 64-Bit (32-bit not supported),"i5 7500K Series, FX 4100K Series",DirectX 11,4.0,50.0
+417910,Windows XP,Windows 7 32/64-bit / Vista 32/64 / XP,Core 2 Series,"Nvidia GTX 470 Series, AMD HD 6970 Series",2.0,4.0
+532210,Windows 10,Windows 10 64-bit,"i5 3470K Series, FX 8350K Series",Nvidia GTX 970 Series,6.0,40.0
+1468810,Windows 7,Windows 7 / Windows 8 / Windows 10 64 bit,Other/Uncategorized,AMD HD 4400 Series,4.0,25.0
+1599340,Windows 10,Windows 10 (64-bit only),"i5 2500K Series, Ryzen 5 1400K Series","Nvidia GTX 1050 Series, AMD RX 560 Series",16.0,100.0
+477160,Windows XP,Windows XP/Vista/7/8/8.1/10 x86 and x64,Core 2 Series,"Nvidia GTX 460 Series, AMD HD 7770 Series",2.048,0.5
+1091500,Windows 10,64-bit Windows 10,"i7 12700K Series, Ryzen 7 7800K Series","Nvidia RTX 2060 Series, AMD RX 5700 Series",16.0,70.0
+340,Windows XP,Windows XP,Pentium Series,DirectX 9,1.0,2.0
+550650,Windows 10,Windows 10 64bit,"i3 4170K Series, FX 8300K Series","Nvidia GTX 760 Series, AMD HD 7950 Series",8.0,8.0
+901583,Windows XP,Windows Vista - Service Pack 1 / Windows XP - Service Pack 3,"Core 2 Series, Athlon X2 Series",Nvidia GeForce 7900 Series,2.0,32.0
+221100,Windows 10,Windows 10 64-bit,"i5 6600K Series, Ryzen 5 1600K Series","Nvidia GTX 1060 Series, AMD RX 580 Series",12.0,30.0
+814380,Windows 7,Windows 7 64-bit | Windows 8 64-bit | Windows 10 64-bit,"i5 2500K Series, Ryzen 5 1400K Series","Nvidia GTX 970 Series, AMD RX 570 Series",8.0,25.0
+304050,Windows VISTA,Vista 32-bit Service Pack 2,"i5 2500K Series, Phenom X4 Series",Other/Uncategorized,1.0,1.0
+1245620,Windows 10,Windows 10/11,"i7 8700K Series, Ryzen 5 3600K Series","Nvidia GTX 1070 Series, AMD VEGA 56 Series",16.0,60.0
